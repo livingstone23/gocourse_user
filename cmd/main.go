@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"git/gocourse_user/internal/user"
 	"git/gocourse_user/pkg/bootstrap"
 	"github.com/gorilla/mux"
@@ -44,10 +45,13 @@ func main() {
 	router.HandleFunc("/users/{id}", userEnd.Update).Methods("PATCH")
 	router.HandleFunc("/users/{id}", userEnd.Delete).Methods("DELETE")
 
+	port := os.Getenv("PORT")
+	address := fmt.Sprintf("127.0.0.1:%s", port)
+
 	//Levantar el servidor, brindamos propiedades
 	srv := &http.Server{
 		Handler:           router,
-		Addr:              "127.0.0.1:8081",
+		Addr:              address,
 		ReadHeaderTimeout: 5 * time.Second,
 		WriteTimeout:      5 * time.Second,
 	}
